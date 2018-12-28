@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yzz.lr.mapper.SystemConfigMapper">
+<!-- 
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" readOnly="true"/>
+ -->
+	<resultMap id="BaseResultMap" type="com.yzz.lr.model.SystemConfig" >
+		<id column="" property=""  />
+	    <result column="key" property="key"  />
+	    <result column="value" property="value"  />
+	    <result column="description" property="description"  />
+
+    </resultMap>
+	
+	<sql id="Base_Column_List">
+    		`key` as `key`,
+    		`value` as `value`,
+    		description as description
+	</sql>
+	
+	
+	<sql id="Base_Where_Clause">
+		<trim prefix="where" prefixOverrides="AND ">
+	    		<if test="key != null and key !='' "> and `key` = #{key}</if>
+	    		<if test="value != null and value !='' "> and `value` = #{value}</if>
+	    		<if test="description != null and description !='' "> and description = #{description}</if>
+		</trim>
+		<if test="sorting != null">order by  ${sorting}</if>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</sql>
+	
+	<sql id="Base_Where_Count">
+		<trim prefix="where" prefixOverrides="AND ">
+	    		<if test="key != null and key !='' "> and `key` = #{key}</if>
+	    		<if test="value != null and value !='' "> and `value` = #{value}</if>
+	    		<if test="description != null and description !='' "> and description = #{description}</if>
+		</trim>
+	</sql>
+	
+	<!-- 查询总数 -->
+	<select id="selectCount" resultType="java.lang.Long" parameterType="java.util.Map">
+		select count()
+		from system_config
+		<include refid="Base_Where_Count" />
+	</select>
+	
+	<!-- 查询 -->
+	<select id="select" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from system_config
+		<include refid="Base_Where_Clause" />
+	</select>
+	
+	<!-- 根据ID查询 -->
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from system_config
+		where  = #{_parameter}
+	</select>
+	
+	<!-- 根据ID删除 -->
+	<delete id="deleteById" parameterType="java.lang.String">
+		delete from system_config
+		where  = #{_parameter}
+	</delete>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="java.util.Map">
+		delete from system_config
+		<include refid="Base_Where_Clause" />
+	</delete>
+	
+	<!-- 添加 -->	
+	<insert id="insert" parameterType="com.yzz.lr.model.SystemConfig">
+		insert into system_config(
+    		`key`,
+    		`value`,
+    		description
+		)
+		values (
+    		#{key},
+    		#{value},
+    		#{description}
+		)
+	</insert>
+		
+	
+	<!-- 通过ID更新 -->
+	<update id="updateByIdSelective" parameterType="com.yzz.lr.model.SystemConfig">
+		update system_config
+		<trim prefix="SET" prefixOverrides=", ">
+	    	<if test="key != null"> , `key` = #{key}</if>
+	    	<if test="value != null"> , `value` = #{value}</if>
+	    	<if test="description != null"> , description = #{description}</if>
+		</trim>
+		where  = #{}
+	</update>
+	
+	<update id="updateById" parameterType="com.yzz.lr.model.SystemConfig">
+		update system_config
+		<trim prefix="SET" prefixOverrides=", "> 
+    		`key` = #{key},
+    		`value` = #{value},
+    		description = #{description}
+    	</trim>
+		where  = #{}
+	</update>
+</mapper>
