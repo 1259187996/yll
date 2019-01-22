@@ -19,9 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by Administrator on 2018/11/27.
@@ -57,23 +56,6 @@ public class IndexController extends BaseController{
     public ModelAndView index(HttpServletRequest request, ModelMap modelMap) {
         this.success(modelMap);
         return new ModelAndView("index",modelMap);
-    }
-
-
-    @RequestMapping("/wx/verify_wx_token")
-    @ResponseBody
-    public String verifyWXToken(HttpServletRequest request) throws AesException {
-        String msgSignature = request.getParameter("signature");
-        if(StringUtil.isBlank(msgSignature)){
-            return "签名验证失败";
-        }
-        String msgTimestamp = request.getParameter("timestamp");
-        String msgNonce = request.getParameter("nonce");
-        String echostr = request.getParameter("echostr");
-        if (WeixinUtil.verifyUrl(msgSignature, msgTimestamp, msgNonce)) {
-            return echostr;
-        }
-        return null;
     }
 
     @RequestMapping("/refreshCache")

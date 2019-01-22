@@ -15,6 +15,7 @@ public class Const {
     public static final String QRCODE_PREFIX = "weixin_qrcode";							        //存放二维码的文件夹
     public static final String OSS_URL_PREFIX = "http://upload.autoport.com.cn/";				//OSS链接前戳
     public static final String USER_SESSION = "USER_SESSION";				                    //userSession常量
+    public static final String MD5_DEFAULT_SALT = "status";                                     //MD5加密默认盐值
 
 
 }
