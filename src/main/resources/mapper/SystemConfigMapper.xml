@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yzz.lr.mapper.SystemConfigMapper">
-<!-- 
-	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" readOnly="true"/>
- -->
+
 	<resultMap id="BaseResultMap" type="com.yzz.lr.model.SystemConfig" >
-		<id column="" property=""  />
 	    <result column="key" property="key"  />
 	    <result column="value" property="value"  />
 	    <result column="description" property="description"  />
@@ -41,7 +38,7 @@
 	
 	<!-- 查询总数 -->
 	<select id="selectCount" resultType="java.lang.Long" parameterType="java.util.Map">
-		select count()
+		select count(1)
 		from system_config
 		<include refid="Base_Where_Count" />
 	</select>
@@ -59,13 +56,13 @@
 		select
 		<include refid="Base_Column_List" />
 		from system_config
-		where  = #{_parameter}
+		where  = #{0}
 	</select>
 	
 	<!-- 根据ID删除 -->
 	<delete id="deleteById" parameterType="java.lang.String">
 		delete from system_config
-		where  = #{_parameter}
+		where  = #{0}
 	</delete>
 	
 	<!-- 删除 -->
@@ -97,7 +94,7 @@
 	    	<if test="value != null"> , `value` = #{value}</if>
 	    	<if test="description != null"> , description = #{description}</if>
 		</trim>
-		where  = #{}
+		where `key` = #{key}
 	</update>
 	
 	<update id="updateById" parameterType="com.yzz.lr.model.SystemConfig">
@@ -107,6 +104,6 @@
     		`value` = #{value},
     		description = #{description}
     	</trim>
-		where  = #{}
+		where `key` = #{key}
 	</update>
 </mapper>
